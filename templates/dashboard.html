@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Seva Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background:#f1f5f9;
+}
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+    width:270px;
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+.profile{
+    text-align:center;
+    padding-bottom:20px;
+    border-bottom:1px solid #334155;
+}
+
+.avatar{
+    font-size:42px;
+}
+
+.profile h3{
+    margin-top:10px;
+}
+
+.verified{
+    font-size:12px;
+    color:#22c55e;
+}
+
+.menu{
+    margin-top:25px;
+}
+
+.menu details{
+    margin-bottom:12px;
+}
+
+.menu summary{
+    cursor:pointer;
+    padding:10px;
+    border-radius:8px;
+    font-weight:600;
+    color:#e5e7eb;
+}
+
+.menu summary:hover{
+    background:#1e293b;
+}
+
+.menu summary::marker{
+    display:none;
+}
+
+.submenu{
+    margin-left:10px;
+    margin-top:5px;
+}
+
+.submenu a{
+    display:block;
+    padding:8px 12px;
+    text-decoration:none;
+    color:#cbd5f5;
+    font-size:14px;
+    border-radius:6px;
+}
+
+.submenu a:hover{
+    background:#2563eb;
+    color:white;
+}
+
+/* ---------- MAIN ---------- */
+.main{
+    flex:1;
+    padding:30px;
+}
+
+/* HEADER */
+.header{
+    background:white;
+    padding:20px 25px;
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.header h1{
+    color:#0f172a;
+}
+
+.header p{
+    color:#64748b;
+    margin-top:5px;
+}
+
+/* STEPS */
+.steps{
+    margin-top:25px;
+    background:linear-gradient(90deg,#2563eb,#1e40af);
+    padding:25px;
+    border-radius:16px;
+    color:white;
+}
+
+.step-box{
+    display:flex;
+    gap:15px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.step{
+    background:rgba(255,255,255,0.25);
+    padding:10px 20px;
+    border-radius:25px;
+    font-size:14px;
+}
+
+/* CARDS */
+.cards{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    box-shadow:0 12px 25px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card h3{
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.card button{
+    margin-top:15px;
+    padding:10px 18px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:#1e40af;
+}
+
+/* APPLICATION STATUS */
+.status-section{
+    margin-top:40px;
+}
+.status-card{
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    margin-bottom:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+.badge{
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+.pending{background:#fef3c7;color:#92400e;}
+.approved{background:#dcfce7;color:#166534;}
+.rejected{background:#fee2e2;color:#991b1b;}
+
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="profile">
+        <div class="avatar">👤</div>
+        <h3>{{ request.user.first_name }}</h3>
+        <span class="verified">✔ Verified User</span>
+    </div>
+
+    <div class="menu">
+
+        <details open>
+            <summary>🏠 Dashboard</summary>
+            <div class="submenu">
+                <a href="{% url 'dashboard' %}">Overview</a>
+                <a href="#">User Info</a>
+            </div>
+        </details>
+
+        <details>
+            <summary>🪪 Identity Cards</summary>
+            <div class="submenu">
+                <a href="#">Aadhaar Card</a>
+                <a href="#">PAN Card</a>
+                <a href="#">Voter ID</a>
+            </div>
+        </details>
+
+        <details>
+            <summary>🤖 AI Extraction</summary>
+            <div class="submenu">
+                <a href="#">About AI Extraction</a>
+                <a href="#">Upload Documents</a>
+                <a href="#">OCR Status</a>
+            </div>
+        </details>
+
+        <details>
+            <summary>📄 Service Forms</summary>
+            <div class="submenu">
+                <a href="#">Income Certificate</a>
+                <a href="#">Domicile Certificate</a>
+                <a href="#">Visa Application</a>
+            </div>
+        </details>
+
+        <details>
+            <summary>🚪 Account</summary>
+            <div class="submenu">
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </details>
+
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <div class="header">
+        <h1>AI Seva Portal</h1>
+        <p>Your smart assistant for Indian citizen services</p>
+    </div>
+
+    <div class="steps">
+        <h2>How Seva AI Works?</h2>
+        <div class="step-box">
+            <div class="step">Upload Documents</div>
+            <div class="step">AI Scan</div>
+            <div class="step">Review</div>
+            <div class="step">Download</div>
+        </div>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Income Certificate</h3>
+            <p>AI based income form auto filling</p>
+            <button>Start Application</button>
+        </div>
+
+        <div class="card">
+            <h3>Domicile Certificate</h3>
+            <p>Auto-fill using Aadhaar / PAN</p>
+            <a href="{% url 'domicile' %}">
+    <button>Start Application</button>
+</a>
+
+        </div>
+
+        <div class="card">
+            <h3>Visa Application</h3>
+            <p>AI powered international visa forms</p>
+            <button>Start Application</button>
+            
+        </div>
+    </div>
+    <div class="status-section">
+    <h2>📌 My Applications</h2>
+
+    {% if applications %}
+        {% for app in applications %}
+        <div class="status-card">
+            <p><strong>Service:</strong> Domicile Certificate</p>
+            <p><strong>Name:</strong> {{ app.full_name }}</p>
+            <p><strong>Purpose:</strong> {{ app.purpose }}</p>
+            <p><strong>Submitted On:</strong> {{ app.submitted_at }}</p>
+
+            {% if app.status == "approved" %}
+    <span class="badge approved">Approved</span>
+    <br><br>
+    <a href="{% url 'download_domicile' app.id %}">
+        <button style="background:#16a34a">
+            Download Certificate
+        </button>
+    </a>
+
+{% elif app.status == "pending" %}
+    <span class="badge pending">Pending</span>
+
+{% else %}
+    <span class="badge rejected">Rejected</span>
+{% endif %}
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No applications submitted yet.</p>
+    {% endif %}
+</div>
+
+
+</main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    height:100vh;
+    background:url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") no-repeat center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Glass Card */
+.register-box{
+    width:400px;
+    padding:40px 35px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.2);
+    color:#fff;
+}
+
+/* Title */
+.register-box h2{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:28px;
+}
+
+/* Inputs */
+.input-box{
+    margin-bottom:22px;
+}
+
+.input-box input{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.6);
+    padding:10px 5px;
+    color:#fff;
+    font-size:15px;
+    outline:none;
+}
+
+.input-box input::placeholder{
+    color:rgba(255,255,255,0.7);
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    background:#fff;
+    color:#000;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:600;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#e5e5e5;
+}
+
+/* Login link */
+.login-link{
+    text-align:center;
+    margin-top:25px;
+    font-size:14px;
+}
+
+.login-link a{
+    color:#fff;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.login-link a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="register-box">
+    <h2>Register</h2>
+    <form method="POST">
+    {% csrf_token %}
+
+    <div class="input-box">
+        <input type="text" name="name" placeholder="Full Name" required>
+    </div>
+
+    <div class="input-box">
+        <input type="email" name="email" placeholder="Email Address" required>
+    </div>
+
+    <div class="input-box">
+        <input type="password" name="password" placeholder="Password" required>
+    </div>
+
+    <div class="input-box">
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+    </div>
+
+    <button type="submit">Create Account</button>
+
+    <div class="login-link">
+        Already have an account? <a href="{% url 'login' %}">Login</a>
+    </div>
+</form>
+       
+</div>
+
+</body>
+</html>

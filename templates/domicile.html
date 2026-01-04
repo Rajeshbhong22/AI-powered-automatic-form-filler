@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Domicile Certificate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+/* Header */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:white;
+    padding:15px 20px;
+    border-radius:12px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.1);
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:22px;
+    color:#0f172a;
+}
+
+.header a{
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.header a:hover{
+    text-decoration:underline;
+}
+
+/* Info section */
+.info{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.info h2{
+    margin-bottom:12px;
+    color:#0f172a;
+}
+
+.info p{
+    margin-bottom:8px;
+    color:#475569;
+    line-height:1.5;
+    font-size:15px;
+}
+
+/* Required Documents */
+.documents{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+    margin-bottom:25px;
+}
+
+.documents h3{
+    margin-bottom:12px;
+    color:#0f172a;
+}
+
+.doc-item{
+    margin-bottom:15px;
+}
+
+.doc-item label{
+    display:block;
+    font-weight:600;
+    color:#334155;
+    margin-bottom:5px;
+}
+
+.doc-item input[type="file"]{
+    display:block;
+}
+
+/* Buttons */
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+.buttons a,
+.buttons button{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    text-decoration:none;
+    color:white;
+    background:#2563eb;
+    transition:0.3s;
+}
+
+.buttons a:hover,
+.buttons button:hover{
+    background:#1e40af;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Header with Back to Dashboard -->
+<div class="header">
+    <h1>Domicile Certificate</h1>
+    <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+</div>
+
+<!-- Information about Domicile -->
+<div class="info">
+    <h2>About Domicile Certificate</h2>
+    <p>A Domicile Certificate is an official Indian document proving you're a permanent resident of a specific state/UT, essential for education, jobs, and government benefits, issued by officials like Tehsildars/DMs, requiring proof of long-term residence (often 15-20 years, varying by state) and applying through local revenue departments.</p>
+    <p><strong>Key Uses:</strong> Education, Employment, Government Schemes, Legal.</p>
+    <p><strong>Eligibility:</strong> Living in state for significant period, apply via local revenue authorities or online portal.</p>
+    <p><strong>Documents Required:</strong> Ration Card, Property Records, Utility Bills, Education Certificates, Voter Lists, etc.</p>
+    <p>For minors, parents/guardians can apply on their behalf. Validity often lifetime but check for recent requirements (1-3 years).</p>
+</div>
+
+<!-- Required Document Upload -->
+<!-- Required Document Upload -->
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<div class="documents">
+    <h3>Upload Required Documents</h3>
+
+    <div class="doc-item">
+        <label>Ration Card / ID Proof:</label>
+        <input type="file" name="rationcard" accept=".jpg,.png,.pdf" required>
+    </div>
+
+    <div class="doc-item">
+        <label>Property Record:</label>
+        <input type="file" name="property" accept=".jpg,.png,.pdf" required>
+    </div>
+
+    <div class="doc-item">
+        <label>Utility Bill:</label>
+        <input type="file" name="utility" accept=".jpg,.png,.pdf" required>
+    </div>
+
+    <div class="doc-item">
+        <label>Education Certificate:</label>
+        <input type="file" name="education" accept=".jpg,.png,.pdf" required>
+    </div>
+
+    <div class="doc-item">
+        <label>Voter ID:</label>
+        <input type="file" name="voter" accept=".jpg,.png,.pdf" required>
+    </div>
+</div>
+
+<!-- Buttons -->
+<div class="buttons">
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    <button type="submit">Next</button>
+</div>
+
+</form>
+
+
+
+
+
+</div>
+
+</body>
+</html>

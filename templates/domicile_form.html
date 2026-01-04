@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Domicile Application Form</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f4f6f9;
+    padding:20px;
+}
+.container{
+    background:#fff;
+    padding:25px;
+    max-width:900px;
+    margin:auto;
+    border-radius:10px;
+}
+h2{margin-bottom:15px;}
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:12px;
+}
+input, select, textarea{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+}
+.row{
+    display:flex;
+    gap:15px;
+}
+.row div{flex:1;}
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+button:hover{background:#1e40af;}
+</style>
+</head>
+
+<body>
+
+<a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+
+<div class="container">
+<h2>Domicile Certificate – Application Form</h2>
+
+<form method="POST" enctype="multipart/form-data"> <!-- multipart required if files -->
+{% csrf_token %}
+
+
+<label>Applicant Full Name</label>
+<input type="text" name="full_name" value="{{ ocr.full_name }}">
+
+
+<!-- Rest of your fields remain same -->
+
+
+<div class="row">
+  <div>
+    <label>Gender</label>
+  <select name="gender" required>
+    <option value="">--Select--</option>
+    <option value="Male" {% if ocr.gender == "Male" %}selected{% endif %}>Male</option>
+    <option value="Female" {% if ocr.gender == "Female" %}selected{% endif %}>Female</option>
+    <option value="Other" {% if ocr.gender == "Other" %}selected{% endif %}>Other</option>
+</select>
+  </div>
+
+  <div>
+    <label>Date of Birth</label>
+    <input type="date" name="dob" value="{{ocr.dob}}" required>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label>Mobile Number</label>
+    <input type="text" name="mobile" value="{{ocr.mobile}}" required>
+  </div>
+
+  <div>
+    <label>Aadhaar Number</label>
+    <input type="text" name="aadhaar" value="{{ ocr.aadhaar }}">
+    
+
+  </div>
+</div>
+
+<label>Permanent Address</label>
+<textarea name="address">{{ocr.address }}</textarea>
+
+
+<div class="row">
+  <div>
+    <label>District</label>
+    <input type="text" name="district" value="{{ocr.district}}" required>
+  </div>
+
+  <div>
+    <label>State</label>
+    <input type="text" name="state" value="{{ocr.state}}" required>
+  </div>
+</div>
+
+<hr>
+
+<h3>Residence Information</h3>
+
+<label>Years of Residence in State</label>
+<input type="number" name="residence_years" value="{{ocr.residence_years}}" required>
+
+<label>Reason for Domicile Certificate</label>
+<select name="purpose" required>
+  <option value="">--Select--</option>
+  <option value="Education" {% if ocr.purpose == "Education" %}selected{% endif %}>Education</option>
+  <option value="Government Job" {% if ocr.purpose == "Government Job" %}selected{% endif %}>Government Job</option>
+  <option value="Scholarship" {% if ocr.purpose == "Scholarship" %}selected{% endif %}>Scholarship</option>
+  <option value="Other" {% if ocr.purpose == "Other" %}selected{% endif %}>Other</option>
+</select>
+
+<label>
+    <input type="checkbox" required>
+    I declare that the above information is true.
+</label>
+
+<button type="submit">Submit Application</button>
+
+
+</form>
+
+
+
+</div>
+
+</body>
+</html>

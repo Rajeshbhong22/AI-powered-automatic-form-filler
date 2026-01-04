@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body{
+    height:100vh;
+    background:url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") no-repeat center center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Glass Card */
+.login-box{
+    width:380px;
+    padding:40px 35px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.2);
+    color:#fff;
+}
+
+/* Title */
+.login-box h2{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:28px;
+}
+
+/* Inputs */
+.input-box{
+    margin-bottom:25px;
+}
+
+.input-box input{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.6);
+    padding:10px 5px;
+    color:#fff;
+    font-size:15px;
+    outline:none;
+}
+
+.input-box input::placeholder{
+    color:rgba(255,255,255,0.7);
+}
+
+/* Remember + Forgot */
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.options label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.options a{
+    color:#fff;
+    text-decoration:none;
+}
+
+.options a:hover{
+    text-decoration:underline;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    background:#fff;
+    color:#000;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+button:hover{
+    background:#e5e5e5;
+}
+
+/* Register */
+.register{
+    text-align:center;
+    margin-top:25px;
+    font-size:14px;
+}
+
+.register a{
+    color:#fff;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.register a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+    <h2>Login</h2>
+
+    <form method="POST">
+    {% csrf_token %}
+
+    <div class="input-box">
+        <input type="email" name="email" placeholder="Enter your email" required>
+    </div>
+
+    <div class="input-box">
+        <input type="password" name="password" placeholder="Enter your password" required>
+    </div>
+
+    <button type="submit">Log In</button>
+
+    <div class="register">
+        Don't have an account? <a href="{% url 'register' %}">Register</a>
+    </div>
+</form>
+
+</div>
+
+</body>
+</html>
