@@ -12,9 +12,8 @@ urlpatterns = [
     'domicile/download/<int:app_id>/',
     views.download_domicile_certificate,
     name='download_domicile'
-),
-
-    
+    ),
+   
 ]
 
 

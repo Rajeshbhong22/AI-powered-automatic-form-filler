@@ -1,6 +1,11 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
+import pytesseract
+from PIL import Image
+from pdf2image import convert_from_bytes
+import re
+
 
 def generate_domicile_pdf(application):
     response = HttpResponse(content_type='application/pdf')
@@ -35,13 +40,6 @@ def generate_domicile_pdf(application):
     c.save()
 
     return response
-
-
-
-import pytesseract
-from PIL import Image
-from pdf2image import convert_from_bytes
-import re
 
 # windows path
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
