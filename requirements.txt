@@ -1,0 +1,16 @@
+# Project Dependencies for OCR Application
+# These allow others to set up the environment easily using: pip install -r requirements.txt
+
+Django==6.0
+pytesseract==0.3.13
+pillow==11.3.0
+pdf2image==1.17.0
+reportlab==4.4.7
+numpy==2.4.3
+pandas==3.0.1
+scikit-learn==1.6.1
+matplotlib==3.10.8
+
+# NOTE: System-level dependencies required:
+# 1. Tesseract OCR (https://github.com/UB-Mannheim/tesseract/wiki)
+# 2. Poppler (for pdf2image, available at http://blog.alivate.com.au/poppler-windows/)
