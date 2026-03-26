@@ -2,147 +2,339 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Seva AI &mdash; Login | AI-Powered Citizen Services</title>
+<meta name="description" content="Login to Seva AI &mdash; India's AI-powered form filling assistant for government citizen services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
-}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-body{
-    height:100vh;
-    background:url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") no-repeat center center/cover;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+  :root {
+    --indigo: #4F46E5;
+    --indigo-dark: #3730A3;
+    --violet: #7C3AED;
+    --orange: #F97316;
+    --bg-dark: #0F0F1A;
+    --card-bg: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.1);
+  }
 
-/* Glass Card */
-.login-box{
-    width:380px;
-    padding:40px 35px;
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(15px);
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.2);
-    color:#fff;
-}
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+  }
 
-/* Title */
-.login-box h2{
-    text-align:center;
-    margin-bottom:30px;
-    font-size:28px;
-}
+  .left-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4c1d95 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 50px;
+    position: relative;
+    overflow: hidden;
+  }
 
-/* Inputs */
-.input-box{
-    margin-bottom:25px;
-}
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    animation: pulse 4s infinite;
+  }
 
-.input-box input{
-    width:100%;
-    background:transparent;
-    border:none;
-    border-bottom:1px solid rgba(255,255,255,0.6);
-    padding:10px 5px;
-    color:#fff;
-    font-size:15px;
-    outline:none;
-}
+  .left-panel::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(249,115,22,0.2) 0%, transparent 70%);
+    bottom: -80px; left: -80px;
+    border-radius: 50%;
+  }
 
-.input-box input::placeholder{
-    color:rgba(255,255,255,0.7);
-}
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.5; }
+  }
 
-/* Remember + Forgot */
-.options{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:14px;
-    margin-bottom:25px;
-}
+  .brand {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+  }
 
-.options label{
-    display:flex;
-    align-items:center;
-    gap:6px;
-}
+  .brand-logo {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #F97316, #EAB308);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.05em;
+    margin: 0 auto 24px;
+    box-shadow: 0 20px 60px rgba(249,115,22,0.4);
+    animation: float 3s ease-in-out infinite;
+  }
 
-.options a{
-    color:#fff;
-    text-decoration:none;
-}
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 
-.options a:hover{
-    text-decoration:underline;
-}
+  .brand h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #fff, #c4b5fd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
 
-/* Button */
-button{
-    width:100%;
-    padding:12px;
-    background:#fff;
-    color:#000;
-    border:none;
-    border-radius:5px;
-    font-size:16px;
-    cursor:pointer;
-    font-weight:600;
-}
+  .brand p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 320px;
+  }
 
-button:hover{
-    background:#e5e5e5;
-}
+  .feature-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 340px;
+  }
 
-/* Register */
-.register{
-    text-align:center;
-    margin-top:25px;
-    font-size:14px;
-}
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: white;
+    font-size: 0.9rem;
+  }
 
-.register a{
-    color:#fff;
-    font-weight:600;
-    text-decoration:none;
-}
+  .feature-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+    opacity: 0.85;
+  }
 
-.register a:hover{
-    text-decoration:underline;
-}
+  .right-panel {
+    width: 480px;
+    background: #0F0F1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 50px;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .login-box h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .login-box .subtitle {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.9rem;
+    margin-bottom: 36px;
+  }
+
+  .form-group {
+    margin-bottom: 22px;
+  }
+
+  .form-group label {
+    display: block;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.83rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .form-group input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: white;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group input:focus {
+    border-color: var(--indigo);
+    background: rgba(79,70,229,0.08);
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+  }
+
+  .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 8px 30px rgba(79,70,229,0.35);
+    margin-top: 8px;
+  }
+
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(79,70,229,0.5); }
+  .btn-submit:active { transform: translateY(0); }
+
+  .register-link {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    margin-top: 20px;
+  }
+  .register-link a {
+    color: #818cf8;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .register-link a:hover { color: white; }
+
+  .toast-container {
+    position: fixed; top: 20px; right: 20px; z-index: 9999;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .toast {
+    background: rgba(30,30,50,0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: white;
+    font-size: 0.9rem;
+    animation: slideIn 0.3s ease;
+    max-width: 320px;
+  }
+  .toast.error { border-left: 3px solid #EF4444; }
+  .toast.success { border-left: 3px solid #22C55E; }
+
+  @keyframes slideIn {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
+    .left-panel { display: none; }
+    .right-panel { width: 100%; }
+  }
 </style>
 </head>
-
 <body>
 
-<div class="login-box">
-    <h2>Login</h2>
+<div class="left-panel">
+  <div class="brand">
+    <div class="brand-logo">IN</div>
+    <h1>Seva AI</h1>
+    <p>India's smartest AI assistant for government form filling &mdash; powered by OCR &amp; voice intelligence</p>
 
-    <form method="POST">
-    {% csrf_token %}
-
-    <div class="input-box">
-        <input type="email" name="email" placeholder="Enter your email" required>
+    <div class="feature-list">
+      <div class="feature-item">
+        <span class="feature-icon">&#9632;</span>
+        <span>Upload Aadhaar, PAN, Voter ID &mdash; auto-extract details instantly</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">&#9670;</span>
+        <span>Voice input support in your preferred Indian language</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">&#10003;</span>
+        <span>Review, edit and submit government forms in minutes</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">&#8659;</span>
+        <span>Download official certificates after approval</span>
+      </div>
     </div>
-
-    <div class="input-box">
-        <input type="password" name="password" placeholder="Enter your password" required>
-    </div>
-
-    <button type="submit">Log In</button>
-
-    <div class="register">
-        Don't have an account? <a href="{% url 'register' %}">Register</a>
-    </div>
-</form>
-
+  </div>
 </div>
 
+<div class="right-panel">
+  <div class="login-box">
+    <h2>Welcome back</h2>
+    <p class="subtitle">Sign in to your Seva AI account</p>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" id="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="btn-submit" id="login-btn">Sign In &rarr;</button>
+    </form>
+
+    <p class="register-link">
+      Don't have an account? <a href="{% url 'register' %}">Create account</a>
+    </p>
+  </div>
+</div>
+
+<div class="toast-container">
+  {% for message in messages %}
+    <div class="toast {% if message.tags %}{{ message.tags }}{% endif %}">
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.querySelectorAll('.toast').forEach(t => {
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.5s'; setTimeout(() => t.remove(), 500); }, 4000);
+  });
+
+  document.querySelector('form').addEventListener('submit', function() {
+    const btn = document.getElementById('login-btn');
+    btn.textContent = 'Signing in\u2026';
+    btn.style.opacity = '0.7';
+  });
+</script>
 </body>
 </html>

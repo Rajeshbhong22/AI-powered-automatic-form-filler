@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seva AI &mdash; Income Certificate</title>
+<meta name="description" content="Upload documents for Income Certificate &mdash; AI auto-fills your application form.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0B0C18; --card-bg: #141526; --border: rgba(255,255,255,0.07);
+    --text: #E2E4F0; --text-muted: rgba(255,255,255,0.45);
+    --green: #10b981; --emerald: #059669;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .topnav { display: flex; align-items: center; justify-content: space-between; padding: 16px 36px; background: rgba(15,16,32,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; color: white; font-weight: 700; font-size: 1.05rem; text-decoration: none; }
+  .nav-logo { width: 32px; height: 32px; background: linear-gradient(135deg, #F97316, #EAB308); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: white; }
+  .nav-back { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.86rem; font-weight: 500; transition: color 0.2s; }
+  .nav-back:hover { color: white; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  .page-header { margin-bottom: 28px; }
+  .page-header h1 { font-size: 1.8rem; font-weight: 800; color: white; margin-bottom: 8px; }
+  .page-header p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; }
+
+  .info-banner {
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.06));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 14px; padding: 20px 24px; margin-bottom: 28px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .info-banner .info-icon { width: 32px; height: 32px; background: rgba(16,185,129,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: #6ee7b7; flex-shrink: 0; margin-top: 2px; }
+  .info-banner h4 { color: #6ee7b7; font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+  .info-banner p { color: rgba(255,255,255,0.6); font-size: 0.84rem; line-height: 1.5; }
+
+  .lang-row { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; }
+  .lang-row label { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; white-space: nowrap; }
+  .lang-select { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: white; padding: 7px 12px; font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer; outline: none; flex: 1; max-width: 220px; }
+  .lang-select option { background: #1a1c30; }
+
+  .upload-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 24px; }
+  .upload-card h3 { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .upload-card > p { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 22px; }
+
+  .doc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  .doc-upload-item label { display: block; color: rgba(255,255,255,0.65); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .drop-zone { border: 2px dashed rgba(255,255,255,0.15); border-radius: 12px; padding: 22px 16px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: rgba(255,255,255,0.02); position: relative; }
+  .drop-zone:hover, .drop-zone.over { border-color: var(--green); background: rgba(16,185,129,0.05); }
+  .drop-zone.has-file { border-color: var(--green); background: rgba(16,185,129,0.05); }
+  .drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .drop-icon { font-size: 1.6rem; margin-bottom: 6px; color: rgba(255,255,255,0.25); }
+  .drop-text { color: var(--text-muted); font-size: 0.8rem; }
+  .drop-text strong { color: #6ee7b7; }
+  .file-name { color: var(--green); font-size: 0.78rem; margin-top: 6px; font-weight: 500; display: none; }
+
+  .voice-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 24px 28px; margin-bottom: 24px; }
+  .voice-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .voice-header h3 { color: white; font-size: 1rem; font-weight: 700; }
+  .voice-badge { padding: 3px 10px; border-radius: 100px; background: rgba(16,185,129,0.15); color: var(--green); font-size: 0.7rem; font-weight: 600; border: 1px solid rgba(16,185,129,0.25); }
+  .voice-controls { display: flex; align-items: center; gap: 14px; }
+  .mic-btn { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--emerald), var(--green)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; color: white; flex-shrink: 0; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(16,185,129,0.4); letter-spacing: 0; }
+  .mic-btn:hover { transform: scale(1.08); }
+  .mic-btn.recording { animation: pulse-mic 1s infinite; background: linear-gradient(135deg, #EF4444, #DC2626); }
+  @keyframes pulse-mic { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); } 50% { box-shadow: 0 0 0 12px rgba(239,68,68,0); } }
+  .voice-input-box { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 16px; color: white; font-size: 0.88rem; font-family: 'Inter', sans-serif; min-height: 52px; outline: none; transition: border-color 0.2s; resize: none; }
+  .voice-input-box:focus { border-color: var(--green); }
+  .voice-status { color: var(--text-muted); font-size: 0.78rem; margin-top: 8px; }
+
+  .submit-row { display: flex; gap: 14px; justify-content: flex-end; margin-top: 24px; }
+  .btn-back { display: flex; align-items: center; gap: 6px; padding: 12px 24px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s, color 0.2s; }
+  .btn-back:hover { background: rgba(255,255,255,0.1); color: white; }
+  .btn-submit-ocr { display: flex; align-items: center; gap: 8px; padding: 13px 28px; background: linear-gradient(135deg, var(--emerald), var(--green)); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; font-weight: 600; font-family: 'Inter', sans-serif; box-shadow: 0 8px 30px rgba(16,185,129,0.35); transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-submit-ocr:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(16,185,129,0.5); }
+  .btn-submit-ocr:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .loading-overlay { position: fixed; inset: 0; background: rgba(11,12,24,0.92); backdrop-filter: blur(8px); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .loading-overlay.active { display: flex; }
+  .loader-icon { width: 72px; height: 72px; background: linear-gradient(135deg, var(--emerald), var(--green)); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 800; color: white; animation: bounce 1.2s infinite; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  .loader-steps { display: flex; flex-direction: column; gap: 14px; }
+  .loader-step { display: flex; align-items: center; gap: 14px; padding: 14px 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: rgba(255,255,255,0.4); font-size: 0.92rem; transition: all 0.4s; min-width: 300px; }
+  .loader-step.active { color: white; background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.3); }
+  .loader-step.done { color: var(--green); background: rgba(16,185,129,0.07); border-color: rgba(16,185,129,0.2); }
+  .step-num-circle { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .spinner { width: 18px; height: 18px; border: 2px solid rgba(16,185,129,0.3); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: auto; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-title { color: white; font-size: 1.3rem; font-weight: 700; }
+  .loader-sub { color: var(--text-muted); font-size: 0.88rem; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="{% url 'dashboard' %}" class="nav-brand">
+    <div class="nav-logo">IN</div>
+    Seva AI
+  </a>
+  <a href="{% url 'dashboard' %}" class="nav-back">&larr; Back to Dashboard</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Income Certificate</h1>
+    <p>Upload your income-related documents below. Our AI will extract your details automatically &mdash; no manual typing needed.</p>
+  </div>
+
+  <div class="info-banner">
+    <div class="info-icon">i</div>
+    <div>
+      <h4>What is an Income Certificate?</h4>
+      <p>An Income Certificate is an official document issued by the Revenue Department certifying the annual income of a family or individual. It is required for scholarships, fee waivers, ration cards, government housing schemes, and various social welfare benefits.</p>
+    </div>
+  </div>
+
+  <div class="lang-row">
+    <label>Language / &#2349;&#2366;&#2359;&#2366;:</label>
+    <select class="lang-select" id="lang-select">
+      <option value="en">English</option>
+      <option value="hi">&#2361;&#2367;&#2306;&#2342;&#2368; (Hindi)</option>
+      <option value="mr">&#2350;&#2352;&#2366;&#2336;&#2368; (Marathi)</option>
+      <option value="bn">&#2476;&#2366;&#2434;&#2482;&#2494; (Bengali)</option>
+      <option value="ta">&#2980;&#2990;&#3007;&#2996;&#3021; (Tamil)</option>
+      <option value="te">&#3108;&#3142;&#3122;&#3137;&#3095;&#3137; (Telugu)</option>
+      <option value="gu">&#2711;&#2753;&#2716;&#2736;&#2750;&#2724;&#2752; (Gujarati)</option>
+      <option value="kn">&#3221;&#3240;&#3277;&#3240;&#3233; (Kannada)</option>
+    </select>
+    <span style="color:var(--text-muted);font-size:0.8rem;">Used for voice recognition</span>
+  </div>
+
+  <form id="ocr-form" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="upload-card">
+      <h3>Upload Income Documents</h3>
+      <p>Upload salary slips, bank statements, PAN card, Form 16, or any income proof. The AI will extract relevant details.</p>
+
+      <div class="doc-grid">
+        <div class="doc-upload-item">
+          <label>Aadhaar Card</label>
+          <div class="drop-zone" id="zone-aadhaar">
+            <input type="file" name="aadhaar_doc" id="file-aadhaar" accept=".jpg,.jpeg,.png,.pdf">
+            <div class="drop-icon">&#9646;</div>
+            <div class="drop-text">Drop or <strong>browse</strong></div>
+            <div class="file-name" id="fn-aadhaar"></div>
+          </div>
+        </div>
+        <div class="doc-upload-item">
+          <label>PAN Card</label>
+          <div class="drop-zone" id="zone-pan">
+            <input type="file" name="pan_doc" id="file-pan" accept=".jpg,.jpeg,.png,.pdf">
+            <div class="drop-icon">&#9632;</div>
+            <div class="drop-text">Drop or <strong>browse</strong></div>
+            <div class="file-name" id="fn-pan"></div>
+          </div>
+        </div>
+        <div class="doc-upload-item">
+          <label>Salary Slip / Form 16</label>
+          <div class="drop-zone" id="zone-salary">
+            <input type="file" name="salary_doc" id="file-salary" accept=".jpg,.jpeg,.png,.pdf">
+            <div class="drop-icon">&#9644;</div>
+            <div class="drop-text">Drop or <strong>browse</strong></div>
+            <div class="file-name" id="fn-salary"></div>
+          </div>
+        </div>
+        <div class="doc-upload-item">
+          <label>Bank Statement / Other</label>
+          <div class="drop-zone" id="zone-bank">
+            <input type="file" name="bank_doc" id="file-bank" accept=".jpg,.jpeg,.png,.pdf">
+            <div class="drop-icon">&#9633;</div>
+            <div class="drop-text">Drop or <strong>browse</strong></div>
+            <div class="file-name" id="fn-bank"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="voice-section">
+      <div class="voice-header">
+        <h3>Voice Input</h3>
+        <span class="voice-badge">AI Powered</span>
+      </div>
+      <p style="color:var(--text-muted);font-size:0.83rem;margin-bottom:14px;">
+        Speak your income details &mdash; e.g., "My name is Sunita Devi, my annual income is 2 lakh 50 thousand rupees from agriculture, I live in Patna, Bihar"
+      </p>
+      <div class="voice-controls">
+        <button type="button" class="mic-btn" id="mic-btn" title="Click to start voice input">REC</button>
+        <textarea class="voice-input-box" id="voice-text" name="voice_text" placeholder="Speak or type your income details here&hellip;" rows="3"></textarea>
+      </div>
+      <div class="voice-status" id="voice-status">Click REC to start speaking</div>
+    </div>
+
+    <div class="submit-row">
+      <a href="{% url 'dashboard' %}" class="btn-back">&larr; Back</a>
+      <button type="button" class="btn-submit-ocr" id="scan-btn" onclick="startOCR()">
+        &#9906; Scan &amp; Extract Data
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loader-icon">&#8377;</div>
+  <div class="loader-title">Extracting your income details</div>
+  <div class="loader-sub">AI is scanning your documents&hellip;</div>
+  <div class="loader-steps">
+    <div class="loader-step" id="step-1"><span class="step-num-circle">1</span>Reading documents<div class="spinner"></div></div>
+    <div class="loader-step" id="step-2"><span class="step-num-circle">2</span>Running OCR scan</div>
+    <div class="loader-step" id="step-3"><span class="step-num-circle">3</span>Extracting income data</div>
+    <div class="loader-step" id="step-4"><span class="step-num-circle">4</span>Mapping to form fields</div>
+  </div>
+</div>
+
+<script>
+const LANG_CODES = { 'en':'en-IN','hi':'hi-IN','mr':'mr-IN','bn':'bn-IN','ta':'ta-IN','te':'te-IN','gu':'gu-IN','kn':'kn-IN' };
+let recognition = null, recognizing = false;
+
+function setupDropZone(zoneId, fileId, fnId) {
+  const zone = document.getElementById(zoneId);
+  const fileInput = document.getElementById(fileId);
+  const fnEl = document.getElementById(fnId);
+  fileInput.addEventListener('change', function() {
+    if (this.files.length > 0) { zone.classList.add('has-file'); fnEl.textContent = '[+] ' + this.files[0].name; fnEl.style.display = 'block'; }
+  });
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('over');
+    if (e.dataTransfer.files.length) {
+      const dt = new DataTransfer(); dt.items.add(e.dataTransfer.files[0]); fileInput.files = dt.files;
+      zone.classList.add('has-file'); fnEl.textContent = '[+] ' + e.dataTransfer.files[0].name; fnEl.style.display = 'block';
+    }
+  });
+}
+setupDropZone('zone-aadhaar','file-aadhaar','fn-aadhaar');
+setupDropZone('zone-pan','file-pan','fn-pan');
+setupDropZone('zone-salary','file-salary','fn-salary');
+setupDropZone('zone-bank','file-bank','fn-bank');
+
+document.getElementById('mic-btn').addEventListener('click', function() {
+  const lang = LANG_CODES[document.getElementById('lang-select').value] || 'en-IN';
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { document.getElementById('voice-status').textContent = 'Voice not supported. Use Chrome.'; return; }
+  if (recognizing) { recognition.stop(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR(); recognition.continuous = true; recognition.interimResults = true; recognition.lang = lang;
+  recognition.onstart = () => { recognizing = true; document.getElementById('mic-btn').classList.add('recording'); document.getElementById('mic-btn').textContent = 'STP'; document.getElementById('voice-status').textContent = 'Listening\u2026'; };
+  recognition.onresult = e => { let final = ''; for (let i = e.resultIndex; i < e.results.length; i++) if (e.results[i].isFinal) final += e.results[i][0].transcript + ' '; if (final) document.getElementById('voice-text').value += final; };
+  recognition.onerror = e => { document.getElementById('voice-status').textContent = 'Error: ' + e.error; recognizing = false; document.getElementById('mic-btn').classList.remove('recording'); document.getElementById('mic-btn').textContent = 'REC'; };
+  recognition.onend = () => { recognizing = false; document.getElementById('mic-btn').classList.remove('recording'); document.getElementById('mic-btn').textContent = 'REC'; document.getElementById('voice-status').textContent = 'Done. Review the text above.'; };
+  recognition.start();
+});
+
+function setStep(n, s) {
+  for (let i=1;i<=4;i++) { document.getElementById('step-'+i).classList.remove('active','done'); const sp = document.getElementById('step-'+i).querySelector('.spinner'); if(sp) sp.remove(); }
+  for (let i=1;i<n;i++) document.getElementById('step-'+i).classList.add('done');
+  if (n<=4) { const cur = document.getElementById('step-'+n); cur.classList.add(s==='done'?'done':'active'); if(s!=='done'){const sp=document.createElement('div');sp.className='spinner';cur.appendChild(sp);} }
+}
+async function startOCR() {
+  const files=['file-aadhaar','file-pan','file-salary','file-bank'];
+  const hasFile = files.some(id=>document.getElementById(id).files.length>0);
+  const hasVoice = document.getElementById('voice-text').value.trim().length>0;
+  if (!hasFile && !hasVoice) { alert('Please upload at least one document or use voice input.'); return; }
+  document.getElementById('loading-overlay').classList.add('active');
+  document.getElementById('scan-btn').disabled = true;
+  const fd = new FormData(document.getElementById('ocr-form'));
+  setStep(1,'active'); await sleep(800);
+  setStep(2,'active'); await sleep(600);
+  setStep(3,'active');
+  try {
+    await fetch("{% url 'income_ocr_ajax' %}", { method:'POST', body:fd });
+    setStep(3,'done'); setStep(4,'active'); await sleep(600); setStep(4,'done'); await sleep(400);
+    window.location.href = "{% url 'income_form' %}";
+  } catch(err) { document.getElementById('loading-overlay').classList.remove('active'); document.getElementById('scan-btn').disabled=false; alert('Error: '+err.message); }
+}
+function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% if summary %}
+<div style="
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 16px 0 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+">
+
+  <div style="
+    flex: 1; min-width: 140px;
+    background: #1a1c2e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  ">
+    <div style="font-size: 1.7rem; font-weight: 800; color: #c4b5fd;">{{ summary.total }}</div>
+    <div style="font-size: 0.75rem; color: #9CA3AF; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em;">Total Applications</div>
+  </div>
+
+  <div style="
+    flex: 1; min-width: 140px;
+    background: #1a1500;
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  ">
+    <div style="font-size: 1.7rem; font-weight: 800; color: #F59E0B;">{{ summary.pending }}</div>
+    <div style="font-size: 0.75rem; color: #9CA3AF; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em;">&#9679; Pending Review</div>
+  </div>
+
+  <div style="
+    flex: 1; min-width: 140px;
+    background: #001233;
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  ">
+    <div style="font-size: 1.7rem; font-weight: 800; color: #3B82F6;">{{ summary.processing }}</div>
+    <div style="font-size: 0.75rem; color: #9CA3AF; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em;">&#9654; Under Processing</div>
+  </div>
+
+  <div style="
+    flex: 1; min-width: 140px;
+    background: #001a10;
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  ">
+    <div style="font-size: 1.7rem; font-weight: 800; color: #10B981;">{{ summary.approved }}</div>
+    <div style="font-size: 0.75rem; color: #9CA3AF; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em;">&#10003; Approved</div>
+  </div>
+
+  <div style="
+    flex: 1; min-width: 140px;
+    background: #1a0000;
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  ">
+    <div style="font-size: 1.7rem; font-weight: 800; color: #EF4444;">{{ summary.rejected }}</div>
+    <div style="font-size: 0.75rem; color: #9CA3AF; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em;">&#10007; Rejected</div>
+  </div>
+
+</div>
+
+<div style="
+  background: #0f1020;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 4px solid #4F46E5;
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  font-size: 0.83rem;
+  color: #9CA3AF;
+  font-family: 'Inter', -apple-system, sans-serif;
+">
+  <strong style="color:#818cf8;">Workflow:</strong>
+  &nbsp;
+  Select applications &rarr; Use <strong style="color:#3B82F6;">[&#9654;] Mark Processing</strong>
+  &rarr; Review details &rarr;
+  <strong style="color:#10B981;">[+] Approve</strong> or
+  <strong style="color:#EF4444;">[-] Reject</strong>
+  (add rejection reason in the record first).
+</div>
+{% endif %}
+
+{{ block.super }}
+{% endblock %}

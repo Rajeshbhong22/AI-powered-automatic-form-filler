@@ -2,131 +2,313 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Register</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Seva AI &mdash; Create Account</title>
+<meta name="description" content="Register for Seva AI &mdash; the AI-powered government form filling assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Segoe UI", sans-serif;
-}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --indigo: #4F46E5; --violet: #7C3AED; --orange: #F97316; }
 
-body{
-    height:100vh;
-    background:url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") no-repeat center/cover;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+  body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: #0F0F1A;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+  }
 
-/* Glass Card */
-.register-box{
-    width:400px;
-    padding:40px 35px;
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(15px);
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.2);
-    color:#fff;
-}
+  .left-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 50px;
+    position: relative;
+    overflow: hidden;
+  }
 
-/* Title */
-.register-box h2{
-    text-align:center;
-    margin-bottom:30px;
-    font-size:28px;
-}
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    animation: pulse 4s infinite;
+  }
 
-/* Inputs */
-.input-box{
-    margin-bottom:22px;
-}
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.5; }
+  }
 
-.input-box input{
-    width:100%;
-    background:transparent;
-    border:none;
-    border-bottom:1px solid rgba(255,255,255,0.6);
-    padding:10px 5px;
-    color:#fff;
-    font-size:15px;
-    outline:none;
-}
+  .brand { position: relative; z-index: 2; text-align: center; color: white; }
 
-.input-box input::placeholder{
-    color:rgba(255,255,255,0.7);
-}
+  .brand-logo {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #F97316, #EAB308);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 800; color: white; letter-spacing: 0.05em;
+    margin: 0 auto 24px;
+    box-shadow: 0 20px 60px rgba(249,115,22,0.4);
+    animation: float 3s ease-in-out infinite;
+  }
 
-/* Button */
-button{
-    width:100%;
-    padding:12px;
-    background:#fff;
-    color:#000;
-    border:none;
-    border-radius:5px;
-    font-size:16px;
-    cursor:pointer;
-    font-weight:600;
-    margin-top:10px;
-}
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 
-button:hover{
-    background:#e5e5e5;
-}
+  .brand h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #fff, #a7f3d0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
 
-/* Login link */
-.login-link{
-    text-align:center;
-    margin-top:25px;
-    font-size:14px;
-}
+  .brand p { color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.7; max-width: 320px; }
 
-.login-link a{
-    color:#fff;
-    font-weight:600;
-    text-decoration:none;
-}
+  .steps-visual {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 340px;
+    width: 100%;
+  }
 
-.login-link a:hover{
-    text-decoration:underline;
-}
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    color: white;
+    position: relative;
+  }
+
+  .step-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px; top: 44px;
+    width: 2px; height: 30px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .step-num {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .step-content { padding: 8px 0 28px; }
+  .step-content strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+  .step-content span { color: rgba(255,255,255,0.55); font-size: 0.8rem; }
+
+  .right-panel {
+    width: 500px;
+    background: #0F0F1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 50px;
+    overflow-y: auto;
+  }
+
+  .register-box { width: 100%; max-width: 380px; }
+
+  .register-box h2 {
+    font-size: 1.8rem; font-weight: 700; color: white; margin-bottom: 6px;
+  }
+  .register-box .subtitle {
+    color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-bottom: 32px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block; color: rgba(255,255,255,0.65); font-size: 0.83rem;
+    font-weight: 500; margin-bottom: 8px; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .form-group input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: white;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus {
+    border-color: #10b981;
+    background: rgba(16,185,129,0.07);
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+  }
+  .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+
+  .password-strength {
+    height: 4px; border-radius: 4px; background: rgba(255,255,255,0.1);
+    margin-top: 8px; overflow: hidden;
+  }
+  .strength-bar {
+    height: 100%; width: 0%; border-radius: 4px;
+    transition: width 0.3s, background 0.3s;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: white;
+    font-size: 1rem; font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    border: none; border-radius: 10px; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 30px rgba(16,185,129,0.35);
+    margin-top: 8px;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(16,185,129,0.5); }
+
+  .login-link {
+    text-align: center; color: rgba(255,255,255,0.5);
+    font-size: 0.9rem; margin-top: 20px;
+  }
+  .login-link a { color: #6ee7b7; text-decoration: none; font-weight: 600; }
+  .login-link a:hover { color: white; }
+
+  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+  .toast {
+    background: rgba(30,30,50,0.95); border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px); border-radius: 12px; padding: 14px 20px;
+    color: white; font-size: 0.9rem; animation: slideIn 0.3s ease; max-width: 320px;
+  }
+  .toast.error { border-left: 3px solid #EF4444; }
+  .toast.success { border-left: 3px solid #22C55E; }
+  @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  @media (max-width: 768px) { .left-panel { display: none; } .right-panel { width: 100%; } }
 </style>
 </head>
-
 <body>
 
-<div class="register-box">
-    <h2>Register</h2>
-    <form method="POST">
-    {% csrf_token %}
+<div class="left-panel">
+  <div class="brand">
+    <div class="brand-logo">IN</div>
+    <h1>Join Seva AI</h1>
+    <p>Start your journey with India's smartest AI form filling assistant</p>
 
-    <div class="input-box">
-        <input type="text" name="name" placeholder="Full Name" required>
+    <div class="steps-visual">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Create your account</strong>
+          <span>Register securely with email</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Upload your documents</strong>
+          <span>Aadhaar, PAN, Voter ID accepted</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>AI extracts your details</strong>
+          <span>OCR + entity recognition in seconds</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Download your certificate</strong>
+          <span>After government approval</span>
+        </div>
+      </div>
     </div>
-
-    <div class="input-box">
-        <input type="email" name="email" placeholder="Email Address" required>
-    </div>
-
-    <div class="input-box">
-        <input type="password" name="password" placeholder="Password" required>
-    </div>
-
-    <div class="input-box">
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-    </div>
-
-    <button type="submit">Create Account</button>
-
-    <div class="login-link">
-        Already have an account? <a href="{% url 'login' %}">Login</a>
-    </div>
-</form>
-       
+  </div>
 </div>
 
+<div class="right-panel">
+  <div class="register-box">
+    <h2>Create account</h2>
+    <p class="subtitle">Fill in the details below to get started</p>
+
+    <form method="POST" id="reg-form">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" name="name" id="name" placeholder="Your full name" required autocomplete="name">
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" id="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" id="password" placeholder="Create a strong password" required>
+        <div class="password-strength"><div class="strength-bar" id="strength-bar"></div></div>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" name="confirm_password" id="confirm-pass" placeholder="Repeat your password" required>
+      </div>
+
+      <button type="submit" class="btn-submit" id="reg-btn">Create Account &rarr;</button>
+    </form>
+
+    <p class="login-link">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+  </div>
+</div>
+
+<div class="toast-container">
+  {% for message in messages %}
+    <div class="toast {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+  {% endfor %}
+</div>
+
+<script>
+  document.getElementById('password').addEventListener('input', function() {
+    const val = this.value;
+    const bar = document.getElementById('strength-bar');
+    let strength = 0;
+    if (val.length >= 8) strength++;
+    if (/[A-Z]/.test(val)) strength++;
+    if (/[0-9]/.test(val)) strength++;
+    if (/[^A-Za-z0-9]/.test(val)) strength++;
+    const widths = ['0%', '25%', '50%', '75%', '100%'];
+    const colors = ['transparent', '#EF4444', '#F97316', '#EAB308', '#22C55E'];
+    bar.style.width = widths[strength];
+    bar.style.background = colors[strength];
+  });
+
+  document.querySelectorAll('.toast').forEach(t => {
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.5s'; setTimeout(() => t.remove(), 500); }, 4000);
+  });
+
+  document.getElementById('reg-form').addEventListener('submit', function() {
+    const btn = document.getElementById('reg-btn');
+    btn.textContent = 'Creating account\u2026';
+    btn.style.opacity = '0.7';
+  });
+</script>
 </body>
 </html>

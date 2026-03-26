@@ -2,348 +2,633 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI Seva Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Seva AI &mdash; Dashboard</title>
+<meta name="description" content="Your AI-powered citizen services dashboard &mdash; manage all government form applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Segoe UI", sans-serif;
-}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0B0C18;
+    --sidebar-bg: #0F1020;
+    --card-bg: #141526;
+    --card-hover: #1a1c30;
+    --border: rgba(255,255,255,0.07);
+    --text: #E2E4F0;
+    --text-muted: rgba(255,255,255,0.45);
+    --indigo: #4F46E5;
+    --violet: #7C3AED;
+    --green: #10b981;
+    --orange: #F97316;
+    --amber: #F59E0B;
+    --red: #EF4444;
+  }
 
-body{
-    background:#f1f5f9;
-}
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
 
-.layout{
-    display:flex;
-    min-height:100vh;
-}
+  .sidebar {
+    width: 270px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+  }
 
-/* ---------- SIDEBAR ---------- */
-.sidebar{
-    width:270px;
-    background:#0f172a;
-    color:white;
-    padding:20px;
-}
+  .sidebar-brand {
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
 
-.profile{
-    text-align:center;
-    padding-bottom:20px;
-    border-bottom:1px solid #334155;
-}
+  .sidebar-logo {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, #F97316, #EAB308);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 800; color: white; letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
 
-.avatar{
-    font-size:42px;
-}
+  .sidebar-brand-text h2 {
+    font-size: 1.1rem; font-weight: 700; color: white;
+  }
+  .sidebar-brand-text p { font-size: 0.72rem; color: var(--text-muted); }
 
-.profile h3{
-    margin-top:10px;
-}
+  .sidebar-user {
+    display: flex; align-items: center; gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
 
-.verified{
-    font-size:12px;
-    color:#22c55e;
-}
+  .user-avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 700; color: white; flex-shrink: 0;
+  }
 
-.menu{
-    margin-top:25px;
-}
+  .user-info h4 { color: white; font-size: 0.9rem; font-weight: 600; }
+  .user-info p { color: var(--text-muted); font-size: 0.75rem; }
 
-.menu details{
-    margin-bottom:12px;
-}
+  .nav-section {
+    padding: 20px 16px 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 
-.menu summary{
-    cursor:pointer;
-    padding:10px;
-    border-radius:8px;
-    font-weight:600;
-    color:#e5e7eb;
-}
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 24px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    border-left: 3px solid transparent;
+    margin: 1px 0;
+  }
 
-.menu summary:hover{
-    background:#1e293b;
-}
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: white; }
+  .nav-item.active { background: rgba(79,70,229,0.12); color: #818cf8; border-left-color: var(--indigo); }
 
-.menu summary::marker{
-    display:none;
-}
+  .nav-item .nav-icon {
+    font-size: 1rem; width: 20px; text-align: center;
+    flex-shrink: 0; font-style: normal;
+  }
 
-.submenu{
-    margin-left:10px;
-    margin-top:5px;
-}
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
 
-.submenu a{
-    display:block;
-    padding:8px 12px;
-    text-decoration:none;
-    color:#cbd5f5;
-    font-size:14px;
-    border-radius:6px;
-}
+  .logout-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    color: var(--red);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .logout-btn:hover { background: rgba(239,68,68,0.1); }
 
-.submenu a:hover{
-    background:#2563eb;
-    color:white;
-}
+  .main {
+    margin-left: 270px;
+    flex: 1;
+    padding: 32px 36px;
+    max-width: calc(100vw - 270px);
+  }
 
-/* ---------- MAIN ---------- */
-.main{
-    flex:1;
-    padding:30px;
-}
+  .page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+  }
 
-/* HEADER */
-.header{
-    background:white;
-    padding:20px 25px;
-    border-radius:14px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-}
+  .greeting h1 { font-size: 1.6rem; font-weight: 700; color: white; }
+  .greeting p { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
 
-.header h1{
-    color:#0f172a;
-}
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
+  }
 
-.header p{
-    color:#64748b;
-    margin-top:5px;
-}
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 24px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.12); }
 
-/* STEPS */
-.steps{
-    margin-top:25px;
-    background:linear-gradient(90deg,#2563eb,#1e40af);
-    padding:25px;
-    border-radius:16px;
-    color:white;
-}
+  .stat-label { color: var(--text-muted); font-size: 0.8rem; font-weight: 500; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 2rem; font-weight: 800; color: white; }
+  .stat-icon { font-size: 1.2rem; margin-bottom: 10px; color: var(--text-muted); font-style: normal; }
+  .stat-card.green .stat-value { color: var(--green); }
+  .stat-card.amber .stat-value { color: var(--amber); }
+  .stat-card.red .stat-value { color: var(--red); }
 
-.step-box{
-    display:flex;
-    gap:15px;
-    margin-top:15px;
-    flex-wrap:wrap;
-}
+  .how-it-works {
+    background: linear-gradient(135deg, #1e1b4b, #2d1f4e);
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
 
-.step{
-    background:rgba(255,255,255,0.25);
-    padding:10px 20px;
-    border-radius:25px;
-    font-size:14px;
-}
+  .how-it-works::before {
+    content: '';
+    position: absolute; right: -60px; top: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+    border-radius: 50%;
+  }
 
-/* CARDS */
-.cards{
-    margin-top:30px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:22px;
-}
+  .how-it-works h3 { color: white; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
 
-.card{
-    background:white;
-    padding:22px;
-    border-radius:18px;
-    box-shadow:0 12px 25px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
+  .steps-flow {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
 
-.card:hover{
-    transform:translateY(-6px);
-}
+  .step-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 7px 16px;
+    color: white;
+    font-size: 0.83rem; font-weight: 500;
+  }
 
-.card h3{
-    color:#0f172a;
-    margin-bottom:10px;
-}
+  .step-num-badge {
+    width: 20px; height: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700;
+  }
 
-.card p{
-    color:#64748b;
-    font-size:14px;
-}
+  .step-arrow { color: rgba(255,255,255,0.3); font-size: 1rem; }
 
-.card button{
-    margin-top:15px;
-    padding:10px 18px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-}
+  .section-title {
+    font-size: 1.05rem; font-weight: 700; color: white;
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
 
-.card button:hover{
-    background:#1e40af;
-}
+  .section-title .title-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    font-size: 0.8rem; font-style: normal;
+  }
 
-/* APPLICATION STATUS */
-.status-section{
-    margin-top:40px;
-}
-.status-card{
-    background:white;
-    padding:20px;
-    border-radius:16px;
-    margin-bottom:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-}
-.badge{
-    padding:6px 14px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:600;
-}
-.pending{background:#fef3c7;color:#92400e;}
-.approved{background:#dcfce7;color:#166534;}
-.rejected{background:#fee2e2;color:#991b1b;}
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 36px;
+  }
 
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, transparent);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-style: normal;
+    margin-bottom: 16px;
+  }
+
+  .service-card h3 { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .service-card p { color: var(--text-muted); font-size: 0.83rem; line-height: 1.5; margin-bottom: 18px; }
+
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+  .tag {
+    padding: 3px 10px; border-radius: 100px; font-size: 0.72rem; font-weight: 500;
+    background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .btn-start {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.875rem; font-weight: 600;
+    text-decoration: none; color: white;
+    border: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn-start:hover { opacity: 0.9; transform: translateX(2px); }
+
+  .btn-indigo { background: linear-gradient(135deg, var(--indigo), var(--violet)); }
+  .btn-green { background: linear-gradient(135deg, #059669, var(--green)); }
+  .btn-disabled { background: rgba(255,255,255,0.08); color: var(--text-muted); cursor: not-allowed; }
+
+  .apps-section { margin-bottom: 36px; }
+
+  .apps-table-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: rgba(255,255,255,0.04); }
+  thead th {
+    padding: 14px 20px;
+    text-align: left;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.025); }
+  tbody td { padding: 14px 20px; color: var(--text); font-size: 0.87rem; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 100px; font-size: 0.78rem; font-weight: 600;
+  }
+  .badge.pending { background: rgba(245,158,11,0.12); color: #F59E0B; border: 1px solid rgba(245,158,11,0.2); }
+  .badge.processing { background: rgba(59,130,246,0.12); color: #3B82F6; border: 1px solid rgba(59,130,246,0.2); }
+  .badge.approved { background: rgba(16,185,129,0.12); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+  .badge.rejected { background: rgba(239,68,68,0.12); color: #EF4444; border: 1px solid rgba(239,68,68,0.2); }
+
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 14px;
+    background: rgba(16,185,129,0.12);
+    color: var(--green);
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 8px;
+    font-size: 0.78rem; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-download:hover { background: rgba(16,185,129,0.2); }
+
+  .empty-state {
+    text-align: center; padding: 50px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .empty-icon { font-size: 2rem; margin-bottom: 12px; opacity: 0.5; }
+  .empty-state p { font-size: 0.9rem; }
+
+  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+  .toast {
+    background: rgba(30,30,50,0.97); border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px); border-radius: 12px; padding: 14px 20px;
+    color: white; font-size: 0.9rem; animation: slideIn 0.3s ease; max-width: 340px;
+  }
+  .toast.error { border-left: 3px solid #EF4444; }
+  .toast.success { border-left: 3px solid #22C55E; }
+  @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; } }
 </style>
 </head>
-
 <body>
-
-<div class="layout">
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
-    <div class="profile">
-        <div class="avatar">👤</div>
-        <h3>{{ request.user.first_name }}</h3>
-        <span class="verified">✔ Verified User</span>
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">IN</div>
+    <div class="sidebar-brand-text">
+      <h2>Seva AI</h2>
+      <p>Citizen Services Portal</p>
     </div>
+  </div>
 
-    <div class="menu">
-
-        <details open>
-            <summary>🏠 Dashboard</summary>
-            <div class="submenu">
-                <a href="{% url 'dashboard' %}">Overview</a>
-                <a href="#">User Info</a>
-            </div>
-        </details>
-
-        <details>
-            <summary>🪪 Identity Cards</summary>
-            <div class="submenu">
-                <a href="#">Aadhaar Card</a>
-                <a href="#">PAN Card</a>
-                <a href="#">Voter ID</a>
-            </div>
-        </details>
-
-        <details>
-            <summary>🤖 AI Extraction</summary>
-            <div class="submenu">
-                <a href="#">About AI Extraction</a>
-                <a href="#">Upload Documents</a>
-                <a href="#">OCR Status</a>
-            </div>
-        </details>
-
-        <details>
-            <summary>📄 Service Forms</summary>
-            <div class="submenu">
-                <a href="#">Income Certificate</a>
-                <a href="#">Domicile Certificate</a>
-                <a href="#">Visa Application</a>
-            </div>
-        </details>
-
-        <details>
-            <summary>🚪 Account</summary>
-            <div class="submenu">
-                <a href="{% url 'logout' %}">Logout</a>
-            </div>
-        </details>
-
+  <div class="sidebar-user">
+    <div class="user-avatar">{{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}</div>
+    <div class="user-info">
+      <h4>{{ request.user.first_name|default:request.user.username }}</h4>
+      <p>&#10003; Verified Citizen</p>
     </div>
+  </div>
+
+  <div class="nav-section">Main</div>
+  <a href="{% url 'dashboard' %}" class="nav-item active">
+    <i class="nav-icon">&#8962;</i> Dashboard
+  </a>
+
+  <div class="nav-section">Services</div>
+  <a href="{% url 'domicile' %}" class="nav-item">
+    <i class="nav-icon">&#9632;</i> Domicile Certificate
+  </a>
+  <a href="{% url 'income' %}" class="nav-item">
+    <i class="nav-icon">&#8377;</i> Income Certificate
+  </a>
+  <a href="#" class="nav-item" style="opacity:0.4;cursor:not-allowed;">
+    <i class="nav-icon">&#9635;</i> Voter ID (Coming Soon)
+  </a>
+  <a href="#" class="nav-item" style="opacity:0.4;cursor:not-allowed;">
+    <i class="nav-icon">&#10010;</i> Health Scheme (Coming Soon)
+  </a>
+
+  <div class="nav-section">Account</div>
+  <a href="#" class="nav-item">
+    <i class="nav-icon">&#9711;</i> Profile
+  </a>
+
+  <div class="sidebar-footer">
+    <a href="{% url 'logout' %}" class="logout-btn">
+      <span>&#9658;</span> Sign Out
+    </a>
+  </div>
 </aside>
 
 <!-- MAIN -->
 <main class="main">
 
-    <div class="header">
-        <h1>AI Seva Portal</h1>
-        <p>Your smart assistant for Indian citizen services</p>
+  <div class="page-header">
+    <div class="greeting">
+      <h1 id="greeting-text">Good Morning, {{ request.user.first_name|default:"Citizen" }}</h1>
+      <p>Here's your application overview for today</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">&#9741;</div>
+      <div class="stat-label">Total Applications</div>
+      <div class="stat-value">{{ dom_stats.total|add:inc_stats.total }}</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-icon">&#8987;</div>
+      <div class="stat-label">Pending</div>
+      <div class="stat-value">{{ dom_stats.pending|add:inc_stats.pending }}</div>
+    </div>
+    <div class="stat-card" style="--val-color:#3B82F6;">
+      <div class="stat-icon" style="color:#3B82F6;">&#9654;</div>
+      <div class="stat-label">Processing</div>
+      <div class="stat-value" style="color:#3B82F6;">{{ dom_stats.processing|add:inc_stats.processing }}</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon">&#10003;</div>
+      <div class="stat-label">Approved</div>
+      <div class="stat-value">{{ dom_stats.approved|add:inc_stats.approved }}</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-icon">&#10007;</div>
+      <div class="stat-label">Rejected</div>
+      <div class="stat-value">{{ dom_stats.rejected|add:inc_stats.rejected }}</div>
+    </div>
+  </div>
+
+  <!-- How it Works -->
+  <div class="how-it-works">
+    <h3>How Seva AI Works</h3>
+    <div class="steps-flow">
+      <div class="step-pill"><span class="step-num-badge">1</span> Upload Documents</div>
+      <span class="step-arrow">&rarr;</span>
+      <div class="step-pill"><span class="step-num-badge">2</span> OCR Scan</div>
+      <span class="step-arrow">&rarr;</span>
+      <div class="step-pill"><span class="step-num-badge">3</span> AI Extraction</div>
+      <span class="step-arrow">&rarr;</span>
+      <div class="step-pill"><span class="step-num-badge">4</span> Auto-fill Form</div>
+      <span class="step-arrow">&rarr;</span>
+      <div class="step-pill"><span class="step-num-badge">5</span> Review &amp; Submit</div>
+      <span class="step-arrow">&rarr;</span>
+      <div class="step-pill"><span class="step-num-badge">6</span> Download Certificate</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="section-title">
+    <span class="title-icon">&#9874;</span> Available Services
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card" style="--card-accent: linear-gradient(to right, #4F46E5, #7C3AED);">
+      <div class="card-icon" style="background:rgba(79,70,229,0.15); color:#818cf8; font-size:1.5rem;">&#9632;</div>
+      <h3>Domicile Certificate</h3>
+      <p>Prove permanent residence in your state for education admissions, government jobs, and welfare schemes.</p>
+      <div class="card-tags">
+        <span class="tag">Aadhaar</span>
+        <span class="tag">PAN</span>
+        <span class="tag">Voter ID</span>
+        <span class="tag">AI Autofill</span>
+      </div>
+      <a href="{% url 'domicile' %}" class="btn-start btn-indigo">Start Application &rarr;</a>
     </div>
 
-    <div class="steps">
-        <h2>How Seva AI Works?</h2>
-        <div class="step-box">
-            <div class="step">Upload Documents</div>
-            <div class="step">AI Scan</div>
-            <div class="step">Review</div>
-            <div class="step">Download</div>
-        </div>
+    <div class="service-card" style="--card-accent: linear-gradient(to right, #059669, #10b981);">
+      <div class="card-icon" style="background:rgba(16,185,129,0.15); color:#6ee7b7; font-size:1.5rem;">&#8377;</div>
+      <h3>Income Certificate</h3>
+      <p>Official certificate for annual income declaration &mdash; required for scholarships, subsidies, and ration cards.</p>
+      <div class="card-tags">
+        <span class="tag">Aadhaar</span>
+        <span class="tag">PAN</span>
+        <span class="tag">Income Proof</span>
+        <span class="tag">AI Autofill</span>
+      </div>
+      <a href="{% url 'income' %}" class="btn-start btn-green">Start Application &rarr;</a>
     </div>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Income Certificate</h3>
-            <p>AI based income form auto filling</p>
-            <button>Start Application</button>
-        </div>
-
-        <div class="card">
-            <h3>Domicile Certificate</h3>
-            <p>Auto-fill using Aadhaar / PAN</p>
-            <a href="{% url 'domicile' %}">
-    <button>Start Application</button>
-</a>
-
-        </div>
-
-        <div class="card">
-            <h3>Visa Application</h3>
-            <p>AI powered international visa forms</p>
-            <button>Start Application</button>
-            
-        </div>
+    <div class="service-card" style="--card-accent: linear-gradient(to right, #D97706, #F97316); opacity: 0.6;">
+      <div class="card-icon" style="background:rgba(249,115,22,0.15); color:#fdba74; font-size:1.5rem;">&#9635;</div>
+      <h3>Voter ID Services</h3>
+      <p>Apply for new voter ID, update details, or request corrections &mdash; fully AI-assisted.</p>
+      <div class="card-tags">
+        <span class="tag">Coming Soon</span>
+      </div>
+      <button class="btn-start btn-disabled" disabled>Coming Soon</button>
     </div>
-    <div class="status-section">
-    <h2>📌 My Applications</h2>
 
-    {% if applications %}
-        {% for app in applications %}
-        <div class="status-card">
-            <p><strong>Service:</strong> Domicile Certificate</p>
-            <p><strong>Name:</strong> {{ app.full_name }}</p>
-            <p><strong>Purpose:</strong> {{ app.purpose }}</p>
-            <p><strong>Submitted On:</strong> {{ app.submitted_at }}</p>
+  </div>
 
-            {% if app.status == "approved" %}
-    <span class="badge approved">Approved</span>
-    <br><br>
-    <a href="{% url 'download_domicile' app.id %}">
-        <button style="background:#16a34a">
-            Download Certificate
-        </button>
-    </a>
+  <!-- Domicile Applications Table -->
+  <div class="apps-section">
+    <div class="section-title">
+      <span class="title-icon">&#9632;</span> Domicile Applications
+    </div>
+    <div class="apps-table-wrap">
+      {% if domicile_apps %}
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Applicant Name</th>
+            <th>Purpose</th>
+            <th>District</th>
+            <th>Submitted</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in domicile_apps %}
+          <tr>
+            <td style="color:var(--text-muted);">{{ forloop.counter }}</td>
+            <td><strong>{{ app.full_name }}</strong></td>
+            <td>{{ app.purpose }}</td>
+            <td>{{ app.district }}, {{ app.state }}</td>
+            <td>{{ app.submitted_at|date:"d M Y" }}</td>
+            <td>
+              <span class="badge {{ app.status }}">
+                {% if app.status == 'pending' %}&#9679;{% elif app.status == 'processing' %}&#9654;{% elif app.status == 'approved' %}&#10003;{% else %}&#10007;{% endif %}
+                {{ app.get_status_display }}
+              </span>
+            </td>
+            <td>
+              {% if app.status == 'approved' %}
+              <a href="{% url 'download_domicile' app.id %}" download="domicile_certificate.pdf" class="btn-download">&#8659; Download</a>
+              {% else %}
+              <span style="color:var(--text-muted);font-size:0.8rem;">Awaiting review</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">&#9632;</div>
+        <p>No domicile applications yet. <a href="{% url 'domicile' %}" style="color:#818cf8;">Apply now &rarr;</a></p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
 
-{% elif app.status == "pending" %}
-    <span class="badge pending">Pending</span>
-
-{% else %}
-    <span class="badge rejected">Rejected</span>
-{% endif %}
-
-        </div>
-        {% endfor %}
-    {% else %}
-        <p>No applications submitted yet.</p>
-    {% endif %}
-</div>
-
+  <!-- Income Applications Table -->
+  <div class="apps-section">
+    <div class="section-title">
+      <span class="title-icon">&#8377;</span> Income Certificate Applications
+    </div>
+    <div class="apps-table-wrap">
+      {% if income_apps %}
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Applicant Name</th>
+            <th>Annual Income</th>
+            <th>District</th>
+            <th>Submitted</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in income_apps %}
+          <tr>
+            <td style="color:var(--text-muted);">{{ forloop.counter }}</td>
+            <td><strong>{{ app.full_name }}</strong></td>
+            <td>&#8377; {{ app.annual_income }}</td>
+            <td>{{ app.district }}, {{ app.state }}</td>
+            <td>{{ app.submitted_at|date:"d M Y" }}</td>
+            <td>
+              <span class="badge {{ app.status }}">
+                {% if app.status == 'pending' %}&#9679;{% elif app.status == 'processing' %}&#9654;{% elif app.status == 'approved' %}&#10003;{% else %}&#10007;{% endif %}
+                {{ app.get_status_display }}
+              </span>
+            </td>
+            <td>
+              {% if app.status == 'approved' %}
+              <a href="{% url 'download_income' app.id %}" download="income_certificate.pdf" class="btn-download">&#8659; Download</a>
+              {% else %}
+              <span style="color:var(--text-muted);font-size:0.8rem;">Awaiting review</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">&#8377;</div>
+        <p>No income applications yet. <a href="{% url 'income' %}" style="color:#6ee7b7;">Apply now &rarr;</a></p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
 
 </main>
 
+<div class="toast-container">
+  {% for message in messages %}
+    <div class="toast {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+  {% endfor %}
 </div>
 
+<script>
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening';
+  const name = '{{ request.user.first_name|default:"Citizen" }}';
+  document.getElementById('greeting-text').textContent = `${greet}, ${name}`;
+
+  document.querySelectorAll('.toast').forEach(t => {
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.5s'; setTimeout(() => t.remove(), 500); }, 5000);
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seva AI &mdash; Income Certificate Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0B0C18; --card-bg: #141526; --border: rgba(255,255,255,0.07);
+    --text: #E2E4F0; --text-muted: rgba(255,255,255,0.45);
+    --green: #10b981; --emerald: #059669;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .topnav { display: flex; align-items: center; justify-content: space-between; padding: 16px 36px; background: rgba(15,16,32,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; color: white; font-weight: 700; font-size: 1.05rem; text-decoration: none; }
+  .nav-logo { width: 32px; height: 32px; background: linear-gradient(135deg, #F97316, #EAB308); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: white; }
+  .nav-back { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.86rem; font-weight: 500; transition: color 0.2s; }
+  .nav-back:hover { color: white; }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 60px; }
+  .page-header { margin-bottom: 28px; }
+  .page-header h1 { font-size: 1.7rem; font-weight: 800; color: white; margin-bottom: 8px; }
+  .page-header p { color: var(--text-muted); font-size: 0.88rem; }
+
+  .ai-notice { display: flex; align-items: center; gap: 12px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 14px 18px; margin-bottom: 28px; color: #6ee7b7; font-size: 0.85rem; }
+  .ai-notice .notice-icon { width: 28px; height: 28px; background: rgba(16,185,129,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--green); flex-shrink: 0; }
+  .ai-notice strong { color: var(--green); }
+
+  .form-section { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 24px 28px; margin-bottom: 20px; }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .section-header .sec-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(16,185,129,0.15); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #6ee7b7; }
+  .section-header h3 { color: white; font-size: 0.98rem; font-weight: 700; }
+
+  .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 18px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-group { display: flex; flex-direction: column; }
+  .form-group label { color: rgba(255,255,255,0.6); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .form-group label .ai-filled { display: inline-block; background: rgba(16,185,129,0.15); color: var(--green); font-size: 0.65rem; font-weight: 600; padding: 1px 7px; border-radius: 100px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; border: 1px solid rgba(16,185,129,0.25); }
+  .form-group input, .form-group select, .form-group textarea { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; color: white; font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; width: 100%; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); background: rgba(16,185,129,0.06); box-shadow: 0 0 0 3px rgba(16,185,129,0.12); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group select option { background: #1a1c30; }
+  .form-group input.ai-value, .form-group select.ai-value { border-color: rgba(16,185,129,0.35); background: rgba(16,185,129,0.04); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .input-prefix-group { position: relative; }
+  .input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--green); font-weight: 600; font-size: 1rem; pointer-events: none; }
+  .input-prefix-group input { padding-left: 30px; }
+
+  .declaration { background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.15); border-radius: 14px; padding: 18px 22px; margin-bottom: 24px; display: flex; gap: 14px; align-items: flex-start; }
+  .declaration input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; margin-top: 2px; accent-color: var(--green); }
+  .declaration p { color: rgba(255,255,255,0.65); font-size: 0.84rem; line-height: 1.5; }
+
+  .submit-row { display: flex; gap: 14px; justify-content: flex-end; }
+  .btn-back { display: flex; align-items: center; gap: 6px; padding: 12px 24px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s, color 0.2s; }
+  .btn-back:hover { background: rgba(255,255,255,0.1); color: white; }
+  .btn-submit { display: flex; align-items: center; gap: 8px; padding: 13px 32px; background: linear-gradient(135deg, var(--emerald), var(--green)); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; font-weight: 600; font-family: 'Inter', sans-serif; box-shadow: 0 8px 30px rgba(16,185,129,0.35); transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(16,185,129,0.5); }
+
+  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+  .toast { background: rgba(30,30,50,0.97); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 14px 20px; color: white; font-size: 0.9rem; animation: slideIn 0.3s ease; max-width: 340px; }
+  .toast.error { border-left: 3px solid #EF4444; }
+  .toast.success { border-left: 3px solid #22C55E; }
+  @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="{% url 'dashboard' %}" class="nav-brand">
+    <div class="nav-logo">IN</div>
+    Seva AI
+  </a>
+  <a href="{% url 'income' %}" class="nav-back">&larr; Re-upload Documents</a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Income Certificate &mdash; Application Form</h1>
+    <p>Review and verify all AI-extracted fields. Fields marked <strong style="color:#10b981;">AI Filled</strong> were auto-populated from your documents.</p>
+  </div>
+
+  {% if ocr %}
+  <div class="ai-notice">
+    <div class="notice-icon">AI</div>
+    <div><strong>AI successfully extracted data from your documents.</strong> Please review each field before submitting.</div>
+  </div>
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- Personal Info -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="sec-icon">&#9711;</div>
+        <h3>Personal Information</h3>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name {% if ocr.full_name %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="text" name="full_name" value="{{ ocr.full_name }}" placeholder="Your full name" required {% if ocr.full_name %}class="ai-value"{% endif %}>
+        </div>
+        <div class="form-group">
+          <label>Father's / Spouse's Name {% if ocr.father_name %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="text" name="father_name" value="{{ ocr.father_name }}" placeholder="Father or spouse name" {% if ocr.father_name %}class="ai-value"{% endif %}>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Gender {% if ocr.gender %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <select name="gender" required {% if ocr.gender %}class="ai-value"{% endif %}>
+            <option value="">&#8212; Select &#8212;</option>
+            <option value="Male" {% if ocr.gender == "Male" %}selected{% endif %}>Male</option>
+            <option value="Female" {% if ocr.gender == "Female" %}selected{% endif %}>Female</option>
+            <option value="Other" {% if ocr.gender == "Other" %}selected{% endif %}>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth {% if ocr.dob %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="date" name="dob" value="{{ ocr.dob }}" required {% if ocr.dob %}class="ai-value"{% endif %}>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mobile Number {% if ocr.mobile %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="tel" name="mobile" value="{{ ocr.mobile }}" placeholder="10-digit mobile" required {% if ocr.mobile %}class="ai-value"{% endif %} maxlength="10">
+        </div>
+      </div>
+    </div>
+
+    <!-- ID Numbers -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="sec-icon">&#9646;</div>
+        <h3>Identity Documents</h3>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Aadhaar Number {% if ocr.aadhaar %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="text" name="aadhaar" value="{{ ocr.aadhaar }}" placeholder="XXXX XXXX XXXX" {% if ocr.aadhaar %}class="ai-value"{% endif %} maxlength="14">
+        </div>
+        <div class="form-group">
+          <label>PAN Number {% if ocr.pan_number %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="text" name="pan_number" value="{{ ocr.pan_number }}" placeholder="ABCDE1234F" {% if ocr.pan_number %}class="ai-value"{% endif %} maxlength="10">
+        </div>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="sec-icon">&#9679;</div>
+        <h3>Address Details</h3>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Permanent Address {% if ocr.address %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <textarea name="address" placeholder="Full address with house no., street, area&hellip;" required {% if ocr.address %}class="ai-value"{% endif %}>{{ ocr.address }}</textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>District {% if ocr.district %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="text" name="district" value="{{ ocr.district }}" placeholder="District" required {% if ocr.district %}class="ai-value"{% endif %}>
+        </div>
+        <div class="form-group">
+          <label>State {% if ocr.state %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <input type="text" name="state" value="{{ ocr.state }}" placeholder="State" required {% if ocr.state %}class="ai-value"{% endif %}>
+        </div>
+      </div>
+    </div>
+
+    <!-- Income Details -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="sec-icon">&#8377;</div>
+        <h3>Income Information</h3>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Annual Income (&#8377;) {% if ocr.annual_income %}<span class="ai-filled">AI Filled</span>{% endif %}</label>
+          <div class="input-prefix-group">
+            <span class="input-prefix">&#8377;</span>
+            <input type="number" name="annual_income" value="{{ ocr.annual_income }}" placeholder="e.g. 250000" required min="0" {% if ocr.annual_income %}class="ai-value"{% endif %}>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Source of Income</label>
+          <select name="income_source" required>
+            <option value="">&#8212; Select source &#8212;</option>
+            <option value="agriculture">Agriculture / Farming</option>
+            <option value="business">Business / Self-Employed</option>
+            <option value="salary">Salary / Service</option>
+            <option value="pension">Pension</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Purpose of Certificate</label>
+          <select name="purpose" required>
+            <option value="">&#8212; Select purpose &#8212;</option>
+            <option value="Scholarship">Scholarship / Fee Waiver</option>
+            <option value="Ration Card">Ration Card / PDS</option>
+            <option value="Government Job">Government Job / Reservation</option>
+            <option value="Housing Scheme">Housing / Pradhan Mantri Scheme</option>
+            <option value="Education Loan">Education Loan</option>
+            <option value="Medical Aid">Medical Aid / Treatment</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="declaration">
+      <input type="checkbox" id="declare" required>
+      <p>I hereby solemnly declare that all the information provided above is true and correct to the best of my knowledge and belief. I understand that submitting false income details is a punishable offence under Indian law and may lead to cancellation of the certificate.</p>
+    </div>
+
+    <div class="submit-row">
+      <a href="{% url 'income' %}" class="btn-back">&larr; Re-scan Documents</a>
+      <button type="submit" class="btn-submit" id="submit-btn">&#10003; Submit Application</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast-container">
+  {% for message in messages %}
+    <div class="toast {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+  {% endfor %}
+</div>
+
+<script>
+  document.querySelectorAll('.toast').forEach(t => {
+    setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.5s'; setTimeout(()=>t.remove(),500); }, 5000);
+  });
+  document.querySelector('form').addEventListener('submit', function() {
+    const btn = document.getElementById('submit-btn');
+    btn.textContent='Submitting\u2026'; btn.style.opacity='0.7';
+  });
+</script>
+</body>
+</html>
